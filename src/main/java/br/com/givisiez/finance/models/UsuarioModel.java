@@ -1,19 +1,19 @@
 package br.com.givisiez.finance.models;
 
-import br.com.givisiez.finance.DTO.DadosCadastroUsuario_DTO;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import br.com.givisiez.finance.DTO.usuario.DadosCadastroUsuario_DTO;
+import br.com.givisiez.finance.DTO.usuario.DadosUpdateUsuario_DTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 
 @Entity
 @Table(name = "usuarios")
 //Anotations Lombok
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -24,12 +24,9 @@ public class UsuarioModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @NotBlank
     private String nome;
-
-    @NotBlank
     private String cpf;
+    private Boolean status;
 
     //@NotBlank
     //@JsonFormat(pattern = "dd-MM-yyyy")
@@ -42,12 +39,19 @@ public class UsuarioModel implements Serializable {
         this.nome = dadosUsuario.nome();
         this.cpf = dadosUsuario.cpf();
         this.telefone = dadosUsuario.telefone();
+
+        this.status = true;
     }
 
-    //Implementação separada, - consumo de api de busca de cep
-    //private Endereco endereco;
+    public void disable() {
+        this.status = false;
+    }
 
-
-
-
+    public void atualizarInformacoes(DadosUpdateUsuario_DTO dadosUsuario) {
+           if (dadosUsuario.nome() != null || dadosUsuario.telefone() != null || dadosUsuario.cpf() != null ){
+                this.nome = dadosUsuario.nome();
+                this.telefone = dadosUsuario.telefone();
+                this.cpf = dadosUsuario.cpf();
+            }
+        }
 }

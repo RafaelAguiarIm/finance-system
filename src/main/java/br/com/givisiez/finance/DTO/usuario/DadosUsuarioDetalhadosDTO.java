@@ -1,4 +1,4 @@
-package br.com.givisiez.finance.DTO;
+package br.com.givisiez.finance.DTO.usuario;
 
 import br.com.givisiez.finance.models.UsuarioModel;
 

@@ -1,8 +1,9 @@
 package br.com.givisiez.finance.controllers;
 
-import br.com.givisiez.finance.DTO.DadosCadastroUsuario_DTO;
-import br.com.givisiez.finance.DTO.DadosUsuarioDetalhadosDTO;
-import br.com.givisiez.finance.DTO.ListUsuarioDTO;
+import br.com.givisiez.finance.DTO.usuario.DadosCadastroUsuario_DTO;
+import br.com.givisiez.finance.DTO.usuario.DadosUpdateUsuario_DTO;
+import br.com.givisiez.finance.DTO.usuario.DadosUsuarioDetalhadosDTO;
+import br.com.givisiez.finance.DTO.usuario.ListUsuarioDTO;
 import br.com.givisiez.finance.models.UsuarioModel;
 import br.com.givisiez.finance.repositories.UsuarioRepository;
 import br.com.givisiez.finance.services.UsuarioService;
@@ -59,10 +60,30 @@ public class UsuarioController {
     }
 
     //delete
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void delete(@PathVariable Long id){
+        repository.deleteById(id);
+    }
 
+    //Disable
+    @DeleteMapping("/disable/{id}")
+    @Transactional
+    public ResponseEntity disable(@PathVariable Long id){
+        var usuario = repository.getReferenceById(id);
+        usuario.disable();
 
-
-
+        //Cod 204 No Content
+        return ResponseEntity.noContent().build();
+    }
 
     //update
+    @PutMapping("/update")
+    @Transactional
+    public ResponseEntity update(@RequestBody @Valid DadosUpdateUsuario_DTO dadosUsuario){
+        var usuarioModel = repository.getReferenceById(dadosUsuario.id());
+        usuarioModel.atualizarInformacoes(dadosUsuario);
+
+        return ResponseEntity.ok(new DadosUsuarioDetalhadosDTO(usuarioModel));
+    }
 }
