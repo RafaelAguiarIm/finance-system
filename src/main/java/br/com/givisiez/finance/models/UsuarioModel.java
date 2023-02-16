@@ -4,8 +4,7 @@ import br.com.givisiez.finance.DTO.DadosCadastroUsuario_DTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -13,8 +12,11 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "usuarios")
+//Anotations Lombok
 @Getter
-@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class UsuarioModel implements Serializable {
 
     private static  final long serialVersionUID = 1L;
