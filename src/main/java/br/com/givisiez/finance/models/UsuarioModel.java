@@ -1,5 +1,7 @@
 package br.com.givisiez.finance.models;
 
+import br.com.givisiez.finance.DTO.DadosCadastroUsuario_DTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -27,11 +29,18 @@ public class UsuarioModel implements Serializable {
     @NotBlank
     private String cpf;
 
-    @NotBlank
-    private LocalDate dataNasc;
+    //@NotBlank
+    //@JsonFormat(pattern = "dd-MM-yyyy")
+    //private LocalDate dataNasc;
 
     @NotBlank
-    private Long telefone;
+    private String telefone;
+
+    public UsuarioModel(DadosCadastroUsuario_DTO dadosUsuario) {
+        this.nome = dadosUsuario.nome();
+        this.cpf = dadosUsuario.cpf();
+        this.telefone = dadosUsuario.telefone();
+    }
 
     //Implementação separada, - consumo de api de busca de cep
     //private Endereco endereco;

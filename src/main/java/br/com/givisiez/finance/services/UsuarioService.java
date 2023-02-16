@@ -11,7 +11,18 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
+    //save
     public UsuarioModel save(UsuarioModel usuario){
         return usuarioRepository.save(usuario);
     }
+
+
+
+    //delete
+
+    //listAll
+
+    //findById
+
+    //update
 }
